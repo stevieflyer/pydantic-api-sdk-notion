@@ -224,40 +224,32 @@ timezone = ["tzdata"]
 
 [[package]]
 name = "pydantic-api-models"
-version = "0.0.1"
+version = "0.0.2"
 description = "Make API self-explanatory with pydantic"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "pydantic_api_models-0.0.2-py3-none-any.whl", hash = "sha256:cb5bbb7177e51a2022e4ffb503f5818a5549238e3441ad5054199f5d55d7bd56"},
+    {file = "pydantic_api_models-0.0.2.tar.gz", hash = "sha256:917c13220c06bd9239f28579fdb636364b5ec80c12aaa8009e17cbd5581a2332"},
+]
 
 [package.dependencies]
-pydantic = {version = "^2.9.2", extras = ["email"]}
-
-[package.source]
-type = "git"
-url = "ssh://git@github.com/stevieflyer/pydantic-api-models.git"
-reference = "HEAD"
-resolved_reference = "548486731bb4a4a41c75176f19327612d0d95485"
+pydantic = {version = ">=2.9.2,<3.0.0", extras = ["email"]}
 
 [[package]]
 name = "pydantic-api-models-notion"
-version = "0.0.1"
+version = "0.0.2"
 description = "A Pydantic-based library for Notion API data models"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "pydantic_api_models_notion-0.0.2-py3-none-any.whl", hash = "sha256:d7dc006c639bc0b163b4c37749f7154727336f79c89eca20e8ef9baa5fc0325d"},
+    {file = "pydantic_api_models_notion-0.0.2.tar.gz", hash = "sha256:442aee033030ae84ecd95a7654a16d9d9f9cd03bf61b1385b611b653b4b05395"},
+]
 
 [package.dependencies]
-emoji = "^2.14.0"
-pydantic-api-models = {git = "ssh://git@github.com/stevieflyer/pydantic-api-models.git"}
-
-[package.source]
-type = "git"
-url = "ssh://git@github.com/stevieflyer/pydantic-api-models-notion.git"
-reference = "HEAD"
-resolved_reference = "33ad8796fd10fe941d6112059098516d29f09494"
+emoji = ">=2.14.0,<3.0.0"
+pydantic-api-models = ">=0.0.2,<0.0.3"
 
 [[package]]
 name = "pydantic-core"
@@ -385,4 +377,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "86eae3996febdb1a72eb2dd70250e0cb85dbb587402c75a3d90e83504fb34a2d"
+content-hash = "0520a3c070bef15bbc464e62e04d3da291c21783cab9c53988a7571ecf83f697"

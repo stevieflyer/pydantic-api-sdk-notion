@@ -25,7 +25,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 notion-client = "^2.2.1"
-pydantic-api-models-notion = { git = "ssh://git@github.com/stevieflyer/pydantic-api-models-notion.git" }
+pydantic-api-models-notion = "^0.0.2"
 
 [build-system]
 requires = ["poetry-core>=1.5.0"]
