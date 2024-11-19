@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "pydantic-api-sdk-notion"
+version = "0.0.1"
+description = "Type Safe SDK For Notion API"
+packages = [{ include = "pydantic_api.notion.sdk", from = "pydantic_api" }]
+authors = ["stevieflyer"]
+readme = "README.md"
+repository = "https://github.com/stevieflyer/pydantic-api-sdk-notion"
+homepage = "https://github.com/stevieflyer/pydantic-api-sdk-notion"
+keywords = ["notion", "pydantic", "api", "type-safe"]
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+notion-client = "^2.2.1"
+pydantic-api-models-notion = { git = "ssh://git@github.com/stevieflyer/pydantic-api-models-notion.git" }
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
