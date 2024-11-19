@@ -44,13 +44,13 @@ new_database = client.databases.create(
         page_id="13e6c6f3f38d80269039f0186aaf95bb"
     ),
     title=[
-        RichTextObjectFactory.new_text(content="💁🏻神奇数据库"),
+        RichTextObjectFactory.new_text(content="🌿 Magical Plant Database"),
     ],
     properties={
         "Plant": TitleDatabaseProperty.define(),
-        "Academic Name": RichTextDatabaseProperty.define(),
-        "Price": NumberDatabaseProperty.define(format="dollar"),
-        "Owners": PeopleDatabaseProperty.define(),
+        "Scientific Name": RichTextDatabaseProperty.define(),
+        "Price ($)": NumberDatabaseProperty.define(format="dollar"),
+        "Discovered By": PeopleDatabaseProperty.define(),
     },
 )
 
@@ -65,3 +65,10 @@ records = client.databases.query(
     page_size=3,
 )
 ```
+
+## Additional Notes
+
+The **types used in this SDK** are maintained in a separate GitHub repository:  
+[https://github.com/stevieflyer/pydantic-api-models-notion](https://github.com/stevieflyer/pydantic-api-models-notion)
+
+This repository ensures type definitions stay **in sync with the latest Notion API updates**. Developers can directly use these types for their own projects, even without the SDK.
