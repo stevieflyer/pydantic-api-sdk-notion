@@ -2,7 +2,7 @@
 name = "pydantic-api-sdk-notion"
 version = "0.0.1"
 description = "Type Safe SDK For Notion API"
-packages = [{ include = "pydantic_api.notion.sdk", from = "pydantic_api" }]
+packages = [{ include = "pydantic_api" }]
 authors = ["stevieflyer"]
 readme = "README.md"
 repository = "https://github.com/stevieflyer/pydantic-api-sdk-notion"
