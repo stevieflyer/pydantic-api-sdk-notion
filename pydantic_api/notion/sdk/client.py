@@ -7,6 +7,7 @@ from notion_client.client import ClientOptions
 from .endpoints import (
     UsersEndpoint,
     PagesEndpoint,
+    BlocksEndpoint,
     SearchEndpoint,
     CommentsEndpoint,
     DatabasesEndpoint,
@@ -25,6 +26,7 @@ class NotionClient:
         # register endpoints
         self.users = UsersEndpoint(self._client)
         self.pages = PagesEndpoint(self._client)
+        self.blocks = BlocksEndpoint(self._client)
         self.search = SearchEndpoint(self._client)
         self.comments = CommentsEndpoint(self._client)
         self.databases = DatabasesEndpoint(self._client)

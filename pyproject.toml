@@ -25,7 +25,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 notion-client = "^2.2.1"
-pydantic-api-models-notion = "^0.0.2"
+pydantic-api-models-notion = "^0.0.4"
 
 [build-system]
 requires = ["poetry-core>=1.5.0"]

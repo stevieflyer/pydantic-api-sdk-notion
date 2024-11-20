@@ -238,18 +238,19 @@ pydantic = {version = ">=2.9.2,<3.0.0", extras = ["email"]}
 
 [[package]]
 name = "pydantic-api-models-notion"
-version = "0.0.2"
+version = "0.0.4"
 description = "A Pydantic-based library for Notion API data models"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "pydantic_api_models_notion-0.0.2-py3-none-any.whl", hash = "sha256:d7dc006c639bc0b163b4c37749f7154727336f79c89eca20e8ef9baa5fc0325d"},
-    {file = "pydantic_api_models_notion-0.0.2.tar.gz", hash = "sha256:442aee033030ae84ecd95a7654a16d9d9f9cd03bf61b1385b611b653b4b05395"},
+    {file = "pydantic_api_models_notion-0.0.4-py3-none-any.whl", hash = "sha256:a2f8b11854c894357ebdc14fcb55f9f2ad275ed2c4a1a51b9706537f6fbc5071"},
+    {file = "pydantic_api_models_notion-0.0.4.tar.gz", hash = "sha256:d90ddc839c2a6277e1650e79d9e6414fdc0e98d902198091fa83a0b09961abe4"},
 ]
 
 [package.dependencies]
 emoji = ">=2.14.0,<3.0.0"
 pydantic-api-models = ">=0.0.2,<0.0.3"
+uuid = ">=1.30,<2.0"
 
 [[package]]
 name = "pydantic-core"
@@ -374,7 +375,17 @@ files = [
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
 
+[[package]]
+name = "uuid"
+version = "1.30"
+description = "UUID object and generation functions (Python 2.3 or higher)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "uuid-1.30.tar.gz", hash = "sha256:1f87cc004ac5120466f36c5beae48b4c48cc411968eed0eaecd3da82aa96193f"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "0520a3c070bef15bbc464e62e04d3da291c21783cab9c53988a7571ecf83f697"
+content-hash = "8088b81b089a0443ab23290b73485d8020be044d8d31339f9ef39bdfa637f709"
