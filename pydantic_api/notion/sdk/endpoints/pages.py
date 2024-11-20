@@ -110,7 +110,7 @@ class PagesEndpoint(BaseEndpoint):
     def update_properties(
         self,
         page_id: UUID,
-        properties: Dict[str, PageProperty],
+        properties: Optional[Dict[str, PageProperty]] = None,
         archived: Optional[bool] = None,
         icon: Optional[IconObject] = None,
         cover: Optional[CoverObject] = None,
