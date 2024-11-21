@@ -1,6 +1,13 @@
-from typing import Optional
+from typing import Optional, Literal, Union
 
-from pydantic_api.notion.models import SearchByTitleRequest, SearchByTitleResponse
+from pydantic_api.notion.models import (
+    Page,
+    Database,
+    SortObject,
+    NotionPaginatedData,
+    SearchByTitleRequest,
+    SearchByTitleFilterObject,
+)
 
 from .base import BaseEndpoint
 
@@ -9,8 +16,8 @@ class SearchEndpoint(BaseEndpoint):
     def __call__(
         self,
         query: str,
-        sort: Optional[dict] = None,
-        filter: Optional[dict] = None,
+        sort: Optional[SortObject] = None,
+        filter_value: Optional[Literal["database", "page"]] = None,
         start_cursor: Optional[str] = None,
         page_size: Optional[int] = None,
     ):
@@ -19,8 +26,8 @@ class SearchEndpoint(BaseEndpoint):
 
         Args:
             query: (str) The text that the API compares page and database titles against.
-            sort: (Optional[dict]) Sorting criteria, such as direction and timestamp.
-            filter: (Optional[dict]) Filtering criteria, such as object type.
+            sort: (Optional[SortObject]) Sorting criteria, such as direction and timestamp.
+            filter_value: (Optional[Literal["database", "page"]]) Filter the search to only include databases or only include pages.
             start_cursor: (Optional[str]) Start cursor for pagination.
             page_size: (Optional[int]) The number of results per page.
 
@@ -33,13 +40,27 @@ class SearchEndpoint(BaseEndpoint):
         raw_req = {
             "query": query,
             "sort": sort,
-            "filter": filter,
+            "filter": (
+                SearchByTitleFilterObject(value=filter_value) if filter_value else None
+            ),
             "start_cursor": start_cursor,
             "page_size": page_size,
         }
         validated_req = self._validate_request(raw_req, SearchByTitleRequest)
         raw_resp = self._client.search(**validated_req)
-        return self._validate_response(raw_resp, SearchByTitleResponse)
+        if filter_value == "database":
+            validated_resp = self._validate_response(
+                raw_resp, NotionPaginatedData[Database]
+            )
+        elif filter_value == "page":
+            validated_resp = self._validate_response(
+                raw_resp, NotionPaginatedData[Page]
+            )
+        else:
+            validated_resp = self._validate_response(
+                raw_resp, NotionPaginatedData[Union[Page, Database]]
+            )
+        return validated_resp
 
 
 __all__ = [

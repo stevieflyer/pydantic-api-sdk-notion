@@ -1,4 +1,5 @@
 from typing import Optional, List, Dict
+
 from uuid import UUID
 from pydantic_api.notion.models import (
     CreateDatabaseRequest,
@@ -16,6 +17,8 @@ from pydantic_api.notion.models import (
     SortObject,
     StartCursor,
     PageSize,
+    IconObject,
+    CoverObject,
 )
 from .base import BaseEndpoint
 
@@ -26,6 +29,8 @@ class DatabasesEndpoint(BaseEndpoint):
         parent: PageParentObject,
         title: List[RichTextObject],
         properties: Dict[str, DatabaseProperty],
+        icon: Optional[IconObject] = None,
+        cover: Optional[CoverObject] = None,
     ):
         """
         Create a new database.
@@ -34,6 +39,8 @@ class DatabasesEndpoint(BaseEndpoint):
             parent: (PageParentObject) The parent page where the database is created.
             title: (List[RichTextObject]) The title of the database as it appears in Notion.
             properties: (Dict[str, DatabaseProperty) The property schema of the database.
+            icon: (Optional[IconObject]) The icon of the database. Not listed in the documentation but shown in the official example.
+            cover: (Optional[CoverObject]) The cover of the database. Not listed in the documentation but shown in the official example.
 
         Returns:
             CreateDatabaseResponse: The created database object.
@@ -45,6 +52,8 @@ class DatabasesEndpoint(BaseEndpoint):
             "parent": parent,
             "title": title,
             "properties": properties,
+            "cover": cover,
+            "icon": icon,
         }
         validated_req = self._validate_request(raw_req, CreateDatabaseRequest)
         raw_resp = self._client.databases.create(**validated_req)
