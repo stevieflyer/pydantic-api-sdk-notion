@@ -1,5 +1,4 @@
 from typing import Optional, List
-from uuid import UUID
 
 from pydantic_api.base import BaseModel
 from pydantic_api.notion.models import (
@@ -19,7 +18,7 @@ from .base import BaseEndpoint
 
 
 class RetrieveBlockChildrenRequest(BaseModel):
-    block_id: UUID
+    block_id: str
     start_cursor: Optional[StartCursor] = None
     page_size: Optional[PageSize] = None
 
@@ -27,13 +26,13 @@ class RetrieveBlockChildrenRequest(BaseModel):
 class BlocksEndpoint(BaseEndpoint):
     def retrieve(
         self,
-        block_id: UUID,
+        block_id: str,
     ):
         """
         Retrieve a block.
 
         Args:
-            block_id: (UUID) The identifier of the block.
+            block_id: (str) The identifier of the block.
 
         Returns:
             RetrieveBlockResponse: The retrieved block object.
@@ -43,12 +42,17 @@ class BlocksEndpoint(BaseEndpoint):
         """
         raw_req = {"block_id": block_id}
         validated_req = self._validate_request(raw_req, RetrieveBlockRequest)
-        raw_resp = self._client.blocks.retrieve(**validated_req)
+        try:
+            raw_resp = self._client.blocks.retrieve(**validated_req)
+        except Exception as e:
+            if "Could not find block with ID" in str(e):
+                return None
+            raise e
         return self._validate_response(raw_resp, RetrieveBlockResponse)
 
     def retrieve_children(
         self,
-        block_id: UUID,
+        block_id: str,
         start_cursor: Optional[StartCursor] = None,
         page_size: Optional[PageSize] = None,
     ):
@@ -56,7 +60,7 @@ class BlocksEndpoint(BaseEndpoint):
         Retrieve the children of a block.
 
         Args:
-            block_id: (UUID) The identifier of the block.
+            block_id: (str) The identifier of the block.
             start_cursor: (Optional[StartCursor]) The start cursor for pagination.
             page_size: (Optional[PageSize]) The number of results per page.
 
@@ -77,7 +81,7 @@ class BlocksEndpoint(BaseEndpoint):
 
     def append_children(
         self,
-        block_id: UUID,
+        block_id: str,
         children: List[dict],
         after: Optional[str] = None,
     ):
@@ -85,7 +89,7 @@ class BlocksEndpoint(BaseEndpoint):
         Append children to a block.
 
         Args:
-            block_id: (UUID) The identifier of the block.
+            block_id: (str) The identifier of the block.
             children: (List[dict]) A list of children blocks to append.
             after: (str) The ID of the existing block that the new block should be appended after.
 
@@ -106,14 +110,14 @@ class BlocksEndpoint(BaseEndpoint):
 
     def update_block(
         self,
-        block_id: UUID,
+        block_id: str,
         properties: dict,
     ):
         """
         Update a block.
 
         Args:
-            block_id: (UUID) The identifier of the block.
+            block_id: (str) The identifier of the block.
             properties: (dict) The properties to update on the block.
 
         Returns:
@@ -133,13 +137,13 @@ class BlocksEndpoint(BaseEndpoint):
 
     def delete_block(
         self,
-        block_id: UUID,
+        block_id: str,
     ):
         """
         Delete a block.
 
         Args:
-            block_id: (UUID) The identifier of the block.
+            block_id: (str) The identifier of the block.
 
         Returns:
             DeleteBlockResponse: The deleted block object.

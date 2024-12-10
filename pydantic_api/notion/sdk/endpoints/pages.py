@@ -56,7 +56,9 @@ class PagesEndpoint(BaseEndpoint):
         raw_resp = self._client.pages.create(**validated_req)
         return self._validate_response(raw_resp, CreatePageResponse)
 
-    def retrieve(self, page_id: UUID, filter_properties: Optional[list[str]] = None):
+    def retrieve(
+        self, page_id: str | UUID, filter_properties: Optional[list[str]] = None
+    ):
         """
         Retrieve a Notion page.
 
@@ -70,9 +72,16 @@ class PagesEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/retrieve-a-page
         """
+        if isinstance(page_id, str):
+            page_id = UUID(page_id)
         raw_req = {"page_id": page_id, "filter_properties": filter_properties}
         validated_req = self._validate_request(raw_req, RetrievePageRequest)
-        raw_resp = self._client.pages.retrieve(**validated_req)
+        try:
+            raw_resp = self._client.pages.retrieve(**validated_req)
+        except Exception as e:
+            if "Could not find page with ID" in str(e):
+                return None
+            raise e
         return self._validate_response(raw_resp, RetrievePageResponse)
 
     # def retrieve_property_item(
@@ -109,7 +118,7 @@ class PagesEndpoint(BaseEndpoint):
 
     def update_properties(
         self,
-        page_id: UUID,
+        page_id: str | UUID,
         properties: Optional[Dict[str, PageProperty]] = None,
         archived: Optional[bool] = None,
         icon: Optional[IconObject] = None,
@@ -131,6 +140,8 @@ class PagesEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/patch-page
         """
+        if isinstance(page_id, str):
+            page_id = UUID(page_id)
         raw_req = {
             "page_id": page_id,
             "properties": properties,

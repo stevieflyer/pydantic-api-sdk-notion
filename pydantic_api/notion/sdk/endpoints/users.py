@@ -46,13 +46,13 @@ class UsersEndpoint(BaseEndpoint):
 
     def retrieve(
         self,
-        user_id: UUID,
+        user_id: str | UUID,
     ):
         """
         Retrieve a user
 
         Args:
-            user_id: (Union[str, UUID]) the identifier for a Notion user
+            user_id: (str | UUID) the identifier for a Notion user
 
         Returns:
             BotUserObject | PersonUserObject: the retrieved user object
@@ -60,6 +60,8 @@ class UsersEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/get-user
         """
+        if isinstance(user_id, str):
+            user_id = UUID(user_id)
         raw_req = {"user_id": user_id}
         validated_req = self._validate_request(raw_req, RetrieveUserRequest)
         raw_resp = self._client.users.retrieve(**validated_req)

@@ -61,7 +61,7 @@ class DatabasesEndpoint(BaseEndpoint):
 
     def query(
         self,
-        database_id: UUID,
+        database_id: str | UUID,
         filter: Optional[FilterObject] = None,
         sorts: Optional[List[SortObject]] = None,
         start_cursor: Optional[StartCursor] = None,
@@ -71,7 +71,7 @@ class DatabasesEndpoint(BaseEndpoint):
         Query a database.
 
         Args:
-            database_id: (UUID) The identifier for the database.
+            database_id: (str | UUID) The identifier for the database.
             filter: (Optional[FilterObject]) Filtering conditions.
             sorts: (Optional[List[SortObject]]) Sorting criteria.
             start_cursor: (Optional[StartCursor]) Start cursor for pagination.
@@ -83,6 +83,8 @@ class DatabasesEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/post-database-query
         """
+        if isinstance(database_id, str):
+            database_id = UUID(database_id)
         raw_req = {
             "database_id": database_id,
             "filter": filter,
@@ -94,12 +96,12 @@ class DatabasesEndpoint(BaseEndpoint):
         raw_resp = self._client.databases.query(**validated_req)
         return self._validate_response(raw_resp, QueryDatabaseResponse)
 
-    def retrieve(self, database_id: UUID):
+    def retrieve(self, database_id: str | UUID):
         """
         Retrieve a database.
 
         Args:
-            database_id: (UUID) The identifier for the database.
+            database_id: (str | UUID) The identifier for the database.
 
         Returns:
             RetrieveDatabaseResponse: The retrieved database object.
@@ -107,14 +109,21 @@ class DatabasesEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/retrieve-a-database
         """
+        if isinstance(database_id, str):
+            database_id = UUID(database_id)
         raw_req = {"database_id": database_id}
         validated_req = self._validate_request(raw_req, RetrieveDatabaseRequest)
-        raw_resp = self._client.databases.retrieve(**validated_req)
+        try:
+            raw_resp = self._client.databases.retrieve(**validated_req)
+        except Exception as e:
+            if "Could not find database with ID" in str(e):
+                return None
+            raise e
         return self._validate_response(raw_resp, RetrieveDatabaseResponse)
 
     def update(
         self,
-        database_id: UUID,
+        database_id: str | UUID,
         title: Optional[List[RichTextObject]] = None,
         description: Optional[List[RichTextObject]] = None,
         properties: Optional[Dict[str, DatabaseProperty]] = None,
@@ -123,7 +132,7 @@ class DatabasesEndpoint(BaseEndpoint):
         Update a database.
 
         Args:
-            database_id: (UUID) The identifier for the database.
+            database_id: (str | UUID) The identifier for the database.
             title: (Optional[List[RichTextObject]]) New title for the database.
             description: (Optional[List[RichTextObject]]) New description for the database.
             properties: (Optional[Dict[str, DatabaseProperty]]) Properties to be updated or added.
@@ -134,6 +143,8 @@ class DatabasesEndpoint(BaseEndpoint):
         Reference:
             https://developers.notion.com/reference/update-a-database
         """
+        if isinstance(database_id, str):
+            database_id = UUID(database_id)
         raw_req = {
             "database_id": database_id,
             "title": title,

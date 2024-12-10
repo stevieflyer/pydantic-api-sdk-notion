@@ -52,7 +52,7 @@ class CommentsEndpoint(BaseEndpoint):
 
     def list(
         self,
-        block_or_page_id: UUID,
+        block_or_page_id: str | UUID,
         start_cursor: Optional[StartCursor] = None,
         page_size: Optional[PageSize] = None,
     ):
@@ -60,7 +60,7 @@ class CommentsEndpoint(BaseEndpoint):
         Retrieve comments
 
         Args:
-            block_or_page_id: (UUID) the identifier for a Notion block or page, a uuidv4 string
+            block_or_page_id: (str | UUID) the identifier for a Notion block or page, a uuidv4 string
             start_cursor: (Optional[StartCursor]) If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.
             page_size: (Optional[PageSize]) The number of results to return. The default page size is 100, and the maximum is 100.
 
