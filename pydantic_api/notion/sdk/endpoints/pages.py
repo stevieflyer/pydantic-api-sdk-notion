@@ -153,6 +153,30 @@ class PagesEndpoint(BaseEndpoint):
         raw_resp = self._client.pages.update(**validated_req)
         return self._validate_response(raw_resp, UpdatePagePropertiesResponse)
 
+    def trash(
+        self,
+        page_id: str | UUID,
+    ):
+        """Trash a page by archiving it. Reference: https://developers.notion.com/reference/patch-page
+
+        Note: This is not a standard Notion API endpoint.
+        """
+        if isinstance(page_id, str):
+            page_id = UUID(page_id)
+        return self.update_properties(page_id=page_id, archived=True)
+
+    def restore(
+        self,
+        page_id: str | UUID,
+    ):
+        """Restore a page by unarchiving it. Reference: https://developers.notion.com/reference/patch-page
+
+        Note: This is not a standard Notion API endpoint.
+        """
+        if isinstance(page_id, str):
+            page_id = UUID(page_id)
+        return self.update_properties(page_id=page_id, archived=False)
+
 
 __all__ = [
     "PagesEndpoint",

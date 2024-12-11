@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydantic-api-sdk-notion"
-version = "0.0.9"
+version = "0.0.10"
 description = "Type Safe SDK For Notion API"
 packages = [{ include = "pydantic_api" }]
 authors = ["stevieflyer"]
