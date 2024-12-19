@@ -130,11 +130,8 @@ class NotionDatabaseLinker(ABC):
         """
         return False
 
-    @abstractmethod
-    def define_database_properties(self) -> dict[str, DatabaseProperty]:
-        raise NotImplementedError(
-            "Please implement the `define_database_properties` method to define the properties of the database."
-        )
+    def define_database_properties(self) -> dict[str, DatabaseProperty] | None:
+        return None
 
     @abstractmethod
     def define_data_model(self) -> type[BaseModel]:
@@ -171,6 +168,11 @@ class NotionDatabaseLinker(ABC):
         return EmojiObject(emoji=defined_emoji_icon) if defined_emoji_icon else None
 
     def _create_database(self, database_name: str, parent_page_id: str | UUID):
+        if self.database_properties is None:
+            raise ValueError(
+                f"Unsupported action [create_database] for {self.__class__}. Please implement the `define_database_properties` method to support this action."
+            )
+
         emoji_icon = self._validate_emoji_icon()
         return self.notion_client.databases.create(
             parent=ParentObjectFactory.new_page_parent(
