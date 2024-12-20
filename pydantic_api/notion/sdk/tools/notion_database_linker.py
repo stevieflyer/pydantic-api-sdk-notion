@@ -10,6 +10,8 @@ from pydantic import BaseModel
 from pydantic_api.notion.sdk import NotionClient
 from pydantic_api.notion.models import (
     Database,
+    IconObject,
+    CoverObject,
     EmojiObject,
     StartCursor,
     PageProperty,
@@ -85,7 +87,12 @@ class NotionDatabaseLinker(ABC):
             f"[empty notion database {self.attached_database_id}] ✅ Database {self.attached_database_id} is emptied successfully."
         )
 
-    def insert(self, record: BaseModel):
+    def insert(
+        self,
+        record: BaseModel,
+        icon: IconObject | None = None,
+        cover: CoverObject | None = None,
+    ):
         if not self.is_attached:
             raise ValueError("Not attached to any database.")
         validated_record = self.data_model.model_validate(record)
@@ -95,6 +102,8 @@ class NotionDatabaseLinker(ABC):
             return None
 
         return self.notion_client.pages.create(
+            icon=icon,
+            cover=cover,
             parent=ParentObjectFactory.new_database_parent(
                 database_id=self.attached_database_id
             ),
