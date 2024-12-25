@@ -234,13 +234,13 @@ pydantic = {version = ">=2.9.2,<3.0.0", extras = ["email"]}
 
 [[package]]
 name = "pydantic-api-models-notion"
-version = "0.0.12"
+version = "0.0.13"
 description = "A Pydantic-based library for Notion API data models"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "pydantic_api_models_notion-0.0.12-py3-none-any.whl", hash = "sha256:7892c24977efb9611edff99e5f2fa195687c558a137dcf8ea5e8cfacb8390e44"},
-    {file = "pydantic_api_models_notion-0.0.12.tar.gz", hash = "sha256:39eb6e09430cd12e78e15eacd112ab4d074e1e2e513322ba832c1b411a208209"},
+    {file = "pydantic_api_models_notion-0.0.13-py3-none-any.whl", hash = "sha256:9ed6a0b0c5c19878fec852515e45736a2fe4e31595857f87093fca7695c2f4b9"},
+    {file = "pydantic_api_models_notion-0.0.13.tar.gz", hash = "sha256:73ac4cc0815033eaf2d4712d2def48ae98eb1d60b753bee940e1b139bb1f2b49"},
 ]
 
 [package.dependencies]
@@ -395,4 +395,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "b42e8ac4169fafa6df82ca40ba910ebdb2b405eb9d6f6fb82d0748e08e6bbc6d"
+content-hash = "e9020bfd61ed521dc6ac30cfef0052dacb85ca309d4c800970dbc660e8a8907b"
