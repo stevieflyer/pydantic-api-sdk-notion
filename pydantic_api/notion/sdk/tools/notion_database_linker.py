@@ -16,6 +16,7 @@ from pydantic_api.notion.models import (
     StartCursor,
     PageProperty,
     DatabaseProperty,
+    IconObjectFactory,
     NotionPaginatedData,
     ParentObjectFactory,
     RichTextObjectFactory,
@@ -125,6 +126,20 @@ class NotionDatabaseLinker(ABC):
         """
         return None
 
+    def define_external_icon(self) -> str | None:
+        """Define the external icon of the database.
+
+        If not None, you must return a URL of the external icon.
+
+        Example:
+
+        ```python
+        def define_external_icon(self):
+            return 'https://www.shutterstock.com/image-illustration/cute-goose-duck-icon-standing-600nw-2441846953.jpg'
+        ```
+        """
+        return None
+
     def not_insert_when(self, record: BaseModel) -> bool:
         """Define the condition when not to insert the record.
 
@@ -174,7 +189,19 @@ class NotionDatabaseLinker(ABC):
             raise ValueError(
                 f"Emoji icon should be a single character, but got {defined_emoji_icon}."
             )
-        return EmojiObject(emoji=defined_emoji_icon) if defined_emoji_icon else None
+        return (
+            IconObjectFactory.from_emoji(emoji=defined_emoji_icon)
+            if defined_emoji_icon
+            else None
+        )
+
+    def _validate_external_icon(self):
+        external_url = self.define_external_icon()
+        return (
+            IconObjectFactory.from_external_file(url=external_url)
+            if external_url
+            else None
+        )
 
     def _create_database(self, database_name: str, parent_page_id: str | UUID):
         if self.database_properties is None:
@@ -182,14 +209,14 @@ class NotionDatabaseLinker(ABC):
                 f"Unsupported action [create_database] for {self.__class__}. Please implement the `define_database_properties` method to support this action."
             )
 
-        emoji_icon = self._validate_emoji_icon()
+        icon = self._validate_emoji_icon() or self._validate_external_icon()
         return self.notion_client.databases.create(
             parent=ParentObjectFactory.new_page_parent(
                 page_id=parent_page_id,
             ),
             title=[RichTextObjectFactory.new_text(content=database_name)],
             properties=self.database_properties,
-            icon=emoji_icon,
+            icon=icon,
         )
 
     def _find_existed_by_name(
