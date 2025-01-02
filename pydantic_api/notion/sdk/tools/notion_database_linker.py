@@ -13,6 +13,7 @@ from pydantic_api.notion.models import (
     IconObject,
     CoverObject,
     EmojiObject,
+    BlockObject,
     StartCursor,
     PageProperty,
     DatabaseProperty,
@@ -102,7 +103,7 @@ class NotionDatabaseLinker(ABC):
         if skip_insert:
             return None
 
-        return self.notion_client.pages.create(
+        page = self.notion_client.pages.create(
             icon=icon,
             cover=cover,
             parent=ParentObjectFactory.new_database_parent(
@@ -110,6 +111,15 @@ class NotionDatabaseLinker(ABC):
             ),
             properties=self._data_to_properties(data=validated_record),
         )
+
+        children = self.__class__.define_page_content(record=validated_record)
+        if children:
+            self.notion_client.blocks.append_children(
+                block_id=str(page.id),
+                children=children,
+            )
+
+        return page
 
     # ---- methods to override ----
     def define_emoji_icon(self) -> str | None:
@@ -162,6 +172,10 @@ class NotionDatabaseLinker(ABC):
         raise NotImplementedError(
             "Please implement the `define_data_model` method to define the data model."
         )
+
+    @classmethod
+    def define_page_content(cls, record: BaseModel) -> list[BlockObject]:
+        return {}
 
     @staticmethod
     @abstractmethod
