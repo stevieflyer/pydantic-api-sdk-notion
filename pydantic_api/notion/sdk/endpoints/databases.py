@@ -31,6 +31,7 @@ class DatabasesEndpoint(BaseEndpoint):
         properties: Dict[str, DatabaseProperty],
         icon: Optional[IconObject] = None,
         cover: Optional[CoverObject] = None,
+        is_inline: bool | None = None,
     ):
         """
         Create a new database.
@@ -41,6 +42,7 @@ class DatabasesEndpoint(BaseEndpoint):
             properties: (Dict[str, DatabaseProperty) The property schema of the database.
             icon: (Optional[IconObject]) The icon of the database. Not listed in the documentation but shown in the official example.
             cover: (Optional[CoverObject]) The cover of the database. Not listed in the documentation but shown in the official example.
+            is_inline: (bool | None) Whether the database is inline. Not listed in the documentation but shown in the official example.
 
         Returns:
             CreateDatabaseResponse: The created database object.
@@ -54,6 +56,7 @@ class DatabasesEndpoint(BaseEndpoint):
             "properties": properties,
             "cover": cover,
             "icon": icon,
+            "is_inline": is_inline,
         }
         validated_req = self._validate_request(raw_req, CreateDatabaseRequest)
         raw_resp = self._client.databases.create(**validated_req)
