@@ -1,5 +1,7 @@
 # Type-Safe Notion API SDK
 
+[![PyPI version](https://img.shields.io/pypi/v/pydantic-api-sdk-notion)](https://pypi.org/project/pydantic-api-sdk-notion/)
+
 A Python SDK for interacting with the Notion API, featuring **complete IntelliSense support**. Always **up-to-date** with the latest Notion API documentation.
 
 ---
@@ -72,3 +74,12 @@ The **types used in this SDK** are maintained in a separate GitHub repository:
 [https://github.com/stevieflyer/pydantic-api-models-notion](https://github.com/stevieflyer/pydantic-api-models-notion)
 
 This repository ensures type definitions stay **in sync with the latest Notion API updates**. Developers can directly use these types for their own projects, even without the SDK.
+
+## Development
+
+This repository uses [devenv](https://devenv.sh/). Devenv and enabled direnv will give you the best developer experience.
+
+## Releasing
+
+Create a new release [here](https://github.com/stevieflyer/pydantic-api-models-notion/releases/new).
+Choose a semver-style tag (i.e. `X.X.X`). Make sure the tag matches the version in `pyproject.toml`.
