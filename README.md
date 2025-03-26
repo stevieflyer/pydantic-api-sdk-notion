@@ -81,5 +81,5 @@ This repository uses [devenv](https://devenv.sh/). Devenv and enabled direnv wil
 
 ## Releasing
 
-Create a new release [here](https://github.com/stevieflyer/pydantic-api-models-notion/releases/new).
+Create a new release [here](https://github.com/stevieflyer/pydantic-api-sdk-notion/releases/new).
 Choose a semver-style tag (i.e. `X.X.X`). Make sure the tag matches the version in `pyproject.toml`.
