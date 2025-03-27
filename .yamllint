@@ -1,0 +1,3 @@
+ignore: |
+  .pre-commit-config.yaml
+document-start: false
