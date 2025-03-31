@@ -1,5 +1,5 @@
 [tool.poetry]
-version = "0.0.34"
+version = "0.0.35"
 name = "pydantic-api-sdk-notion"
 description = "Type Safe SDK For Notion API"
 packages = [{ include = "pydantic_api" }]
@@ -23,7 +23,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.12"
 notion-client = "^2.2.1"
-pydantic-api-models-notion = "^0.0.19"
+pydantic-api-models-notion = "^0.0.20"
 
 [build-system]
 requires = ["poetry-core>=1.5.0"]
