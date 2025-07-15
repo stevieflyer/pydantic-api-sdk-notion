@@ -24,6 +24,8 @@ jobs:
       - tests
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: cachix/install-nix-action@v31
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv

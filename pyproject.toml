@@ -1,6 +1,9 @@
-[tool.poetry]
-version = "0.0.35"
+[project]
+dynamic = ["version"]
 name = "pydantic-api-sdk-notion"
+
+[tool.poetry]
+version = "0.0.0"
 description = "Type Safe SDK For Notion API"
 packages = [{ include = "pydantic_api" }]
 authors = ["stevieflyer"]
@@ -20,11 +23,16 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
 ]
 
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
+
 [tool.poetry.dependencies]
 python = "^3.12"
 notion-client = "^2.2.1"
 pydantic-api-models-notion = "^0.0.22"
 
 [build-system]
-requires = ["poetry-core>=1.5.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.5.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
