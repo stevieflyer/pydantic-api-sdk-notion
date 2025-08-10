@@ -7,11 +7,15 @@
 }:
 
 {
-  packages = [ pkgs.git ];
+  packages = [
+    pkgs.git
+    pkgs.python312Packages.poetry-dynamic-versioning
+  ];
 
   languages.python.enable = true;
   languages.python.poetry.enable = true;
   languages.python.poetry.activate.enable = true;
+  languages.python.poetry.package = pkgs.python312Packages.pkgs.poetry;
   languages.python.version = "3.12";
 
   git-hooks.hooks = {
