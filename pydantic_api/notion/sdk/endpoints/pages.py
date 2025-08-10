@@ -84,37 +84,37 @@ class PagesEndpoint(BaseEndpoint):
             raise e
         return self._validate_response(raw_resp, RetrievePageResponse)
 
-    # def retrieve_property_item(
-    #     self,
-    #     page_id: UUID,
-    #     property_id: str,
-    #     start_cursor: Optional[str] = None,
-    #     page_size: Optional[int] = None,
-    # ):
-    #     """
-    #     Retrieve a property item from a Notion page.
+    def retrieve_property_item(
+        self,
+        page_id: UUID,
+        property_id: str,
+        start_cursor: Optional[str] = None,
+        page_size: Optional[int] = None,
+    ):
+        """
+        Retrieve a property item from a Notion page.
 
-    #     Args:
-    #         page_id: The identifier for the page.
-    #         property_id: The identifier for the property.
-    #         start_cursor: The cursor for pagination.
-    #         page_size: The number of results per page.
+        Args:
+            page_id: The identifier for the page.
+            property_id: The identifier for the property.
+            start_cursor: The cursor for pagination.
+            page_size: The number of results per page.
 
-    #     Returns:
-    #         RetrievePagePropertyItemResponse: the retrieved property object.
+        Returns:
+            RetrievePagePropertyItemResponse: the retrieved property object.
 
-    #     Reference:
-    #         https://developers.notion.com/reference/retrieve-a-page-property
-    #     """
-    #     raw_req = {
-    #         "page_id": page_id,
-    #         "property_id": property_id,
-    #         "start_cursor": start_cursor,
-    #         "page_size": page_size,
-    #     }
-    #     validated_req = self._validate_request(raw_req, RetrievePagePropertyItemRequest)
-    #     raw_resp = self._client.pages.retrieve_property(**validated_req)
-    #     return self._validate_response(raw_resp, RetrievePagePropertyItemResponse)
+        Reference:
+            https://developers.notion.com/reference/retrieve-a-page-property
+        """
+        raw_req = {
+            "page_id": page_id,
+            "property_id": property_id,
+            "start_cursor": start_cursor,
+            "page_size": page_size,
+        }
+        validated_req = self._validate_request(raw_req, RetrievePagePropertyItemRequest)
+        raw_resp = self._client.pages.properties.retrieve(**validated_req)
+        return self._validate_response(raw_resp, RetrievePagePropertyItemResponse)
 
     def update_properties(
         self,

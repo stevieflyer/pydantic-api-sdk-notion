@@ -4,6 +4,7 @@ from typing import Any, TypeVar, Type
 
 from notion_client import Client as _Client
 from pydantic import BaseModel, ValidationError
+from pydantic import TypeAdapter
 
 from ..exception import InvalidRequestError, InvalidResponseError
 
@@ -26,7 +27,11 @@ class BaseEndpoint(ABC):
 
     def _validate_response(self, raw_resp: dict[str, Any], pydantic_model: Type[T]):
         try:
-            validated_response = pydantic_model.model_validate(raw_resp)
+            if issubclass(pydantic_model, BaseModel):
+                validated_response = pydantic_model.model_validate(raw_resp)
+            else:
+                adapter = TypeAdapter(pydantic_model)
+                validated_response = adapter.validate_python(raw_resp)
         except ValidationError as e:
             raise InvalidResponseError(raw_response=raw_resp) from e
         return validated_response
