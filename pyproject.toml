@@ -31,7 +31,7 @@ style = "semver"
 [tool.poetry.dependencies]
 python = "^3.12"
 notion-client = "^2.2.1"
-pydantic-api-models-notion = "^0.0.22"
+pydantic-api-models-notion = "^0.0.23"
 
 [build-system]
 requires = ["poetry-core>=1.5.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
